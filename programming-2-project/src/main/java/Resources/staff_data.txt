@@ -1,0 +1,21 @@
+1,Computer Science,13, 520555982, KING,FRANCIS,       m,      1977-03-13, Secretary,30
+3,Management,      14, 715555231, TURNER,  MARY,      f,      1994-08-19, Assistant,35
+3,Management,      15, 921555332, ADAMS ,DIANE,       m,      1978-08-09, Officer,20
+2,Math,            17, 715555082, JAMES, FRED,        f,      1998-01-13, Assistant,25
+4,Science,         16, 520225982, FORD , JENNIFER,    f,      1989-01-15, Officer,30
+4, Science,        18, 713556543, ROBERTS , GRACE,    m,      1980-12-11, Librarian,15
+5,Art,             19, 921555366, DOUGLAS, MICHAEL,   m,      1998-09-13, Technician,20
+4,Computer Science,20, 715555872, MILLER  ,BARBARA,   m,      1989-09-07, Coordinator,28
+3,Management,      21, 921555366, JENSEN ,ALICE,      f,      1995-06-17, Administrator,20
+2,Math,            22, 715555872, MURRAY ,JAMES,      f,      1981-06-12, Technician,28
+
+
+
+
+
+
+
+
+
+
+

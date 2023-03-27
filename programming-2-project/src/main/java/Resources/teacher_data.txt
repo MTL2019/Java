@@ -1,0 +1,25 @@
+1,Computer Science,1, 132765434,      SMITH,  JOHN,       m,      1970-08-13, 1,Database,           PhD,      Yes
+2,Math,            2, 521098789,      ALLEN,  KEVIN,      m,      1994-06-19, 2,Math,               Bachelor,     32,Yes
+1,Computer Science,3, 654736454,      DOYLE , JEAN,       m,      1990-08-09, 1,Python,             PhD,      No
+3,Management,      4, 435678765,      DENNIS, LYNN,       f,      1970-01-13, 2,Management,         Master,       23,No
+3,Management,      5, 645346786,      BAKER , LESLIE,     f,      1980-01-15, 1,Management,         PhD,      Yes
+2,Math,            6, 645346780,      WARD ,  CYNTHIA,    m,      1980-02-11, 2,Math,               Bachelor,     20,No
+4,Science,         7, 445146711,      PETERS, DANIEL,     m,      1988-09-13, 1,Material,           Master,   Yes
+4,Science,         8, 345346715,      SHAW,   KAREN,      m,      1989-04-07, 2,Chemical,           Bachelor,     24,No
+5,Art,             9, 645326717,      DUNCAN, SARAH,      m,      1995-06-17, 1,Music,              Master,   Yes
+4,Computer Science,10, 745346718,      LANGE,  GREGORY,    f,      1991-06-12, 1,Java,               Master,   No
+3,Management,      11, 945246719,      JONES,  TERRY,      f,      1993-07-13, 1,Management,         PhD,      No
+2,Math,            12, 645146720,      ALBERTS,CHRIS,      m,      1987-08-13, 2,Math,               Bachelor,     25,No
+
+
+
+
+
+
+
+
+
+
+
+
+
