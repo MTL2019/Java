@@ -1,0 +1,30 @@
+server:
+  port: 84
+
+spring:
+  application:
+    name: nacos-order-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  main:
+    allow-circular-references: true   #允许循环依赖
+
+#激活sentinel对feign支持
+feign:
+  sentinel:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# 消费者将要去访问的微服务名称，注册进nacos的服务提供者名称
+server-url:
+  nacos-user-server: http://nacos-payment-provider

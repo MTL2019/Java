@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jw.sc.dao.PaymentDao"><!--绑定mapper接口的全限定类名-->
+
+    <insert id="create" parameterType="Payment" useGeneratedKeys="true" keyProperty="id">
+        insert into payment(serial) values (#{serial})
+    </insert>
+
+    <!--使用resultMap时，详细设置接受数据类的字段和数据库表的列名的对应关系-->
+    <resultMap id="BaseResultMap" type="Payment"><!--使用类别名，在主配置文件中设置-->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="serial" column="serial" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- id为调用语句的代号；resultMap 匹配java类变量和数据库表列名关系-->
+    <select id="getPaymentById" parameterType="Long" resultMap="BaseResultMap">
+        select * from payment where id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,45 @@
+server:
+  port: 3344
+
+spring:
+  application:
+    name: CLOUD-CONFIG-CENTER
+  cloud:
+    config:
+      server:
+        git:
+          #uri: git@github.com:usadavin/springcloud-config.git #github仓库的名字
+          uri: https://github.com/usadavin/springcloud-config.git  # http形式的连接，不是ssh的
+          search-paths:
+            - springcloud-config  #搜索目录
+          #username: xxx@gmail.com # git仓库的账号（公开仓库无需账号信息）
+          #password: xxx
+      label: main #读取主分支
+    bus:
+      refresh:
+        enabled: true
+
+  # rabbitmq端口
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+#暴露bus刷新配置的端点
+managment:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    bus-refresh:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      # defaultZone: http://localhost:7001/eureka
+      # 集群版
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+      #设置与eureka server交互地址

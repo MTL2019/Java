@@ -1,0 +1,4 @@
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloud-stream-rabbitmq-provider8801/src/main/java/com/jw/sc/RabbitMQMain8801.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloud-stream-rabbitmq-provider8801/src/main/java/com/jw/sc/service/IMessageProvider.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloud-stream-rabbitmq-provider8801/src/main/java/com/jw/sc/controller/SendMessageController.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloud-stream-rabbitmq-provider8801/src/main/java/com/jw/sc/service/Impl/MessageProviderImpl.java

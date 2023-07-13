@@ -1,0 +1,5 @@
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloudalibaba-consumer-nacos-order84/src/main/java/com/jw/sc/service/PaymentService.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloudalibaba-consumer-nacos-order84/src/main/java/com/jw/sc/controller/CircleBreakerController.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloudalibaba-consumer-nacos-order84/src/main/java/com/jw/sc/config/ApplicationContextConfig.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloudalibaba-consumer-nacos-order84/src/main/java/com/jw/sc/NacosOrderConsumerMain84.java
+/Users/davin/Documents/Idea_workspace/springcloud/springboot1/cloudalibaba-consumer-nacos-order84/src/main/java/com/jw/sc/service/PaymentFallbackService.java

@@ -1,0 +1,20 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: nacos-payment-provider
+  cloud:
+    nacos:
+      discovery:
+        #nacos服务中心注册地址
+        server-addr: 127.0.0.1:8848
+
+
+  main:
+    allow-circular-references: true  #允许循环引用依赖设置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

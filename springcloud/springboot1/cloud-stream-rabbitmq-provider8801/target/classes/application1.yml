@@ -1,0 +1,42 @@
+# 注册到consul服务器，支持服务提供者的端口
+server:
+  port: 8801
+
+# 注册consul到服务中心
+spring:
+  application:
+    name: CLOUD-STREAM-PROVIDER
+  cloud:
+    stream:
+      binders:    #绑定rabbitMQ的服务信息
+        defaultRabbit:   #用于绑定的名称，用于binding整合
+          type: rabbit  #组件类型
+          environment:  #rabbitMQ相关环境配置
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+      bindings:
+        sendsms-out-0:
+          destination: studyExchange
+          content-type: application/json
+        output:   #表示这是消息的生产者 发送消息
+          #destination: studyExchange  #表示要使用的exchange名称
+          destination: studyExchange  #表示要使用的exchange名称
+          content-type: application/json  #设置消息类型
+          binder: defaultRabbit     #设置要绑定消息服务的具体设置
+
+eureka:
+  client:
+    service-url:
+      # defaultZone: http://localhost:7001/eureka
+      # 集群版
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+      #设置与eureka server交互地址
+  instance:
+    leased-renewal-interval-in-seconds: 2 #客户端向服务器发送心跳的时间间隔  默认30s
+    leased-expiration-duration-in-seconds: 5  #服务端收到最后一次心跳后等待的时间上限，默认90s；超时将删除服务
+    instance-id: send-8801.com    #消息列表显示主机名
+    prefer-ip-address: true

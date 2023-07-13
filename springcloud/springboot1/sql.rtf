@@ -1,0 +1,200 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fnil\fcharset134 PingFangSC-Regular;}
+{\colortbl;\red255\green255\blue255;\red191\green100\blue38;\red32\green32\blue32;\red153\green168\blue186;
+\red133\green96\blue154;\red86\green132\blue173;\red109\green109\blue109;\red88\green118\blue71;}
+{\*\expandedcolortbl;;\csgenericrgb\c74902\c39216\c14902;\csgenericrgb\c12549\c12549\c12549;\csgenericrgb\c60000\c65882\c72941;
+\csgenericrgb\c52157\c37647\c60392;\csgenericrgb\c33725\c51765\c67843;\csgenericrgb\c42745\c42745\c42745;\csgenericrgb\c34510\c46275\c27843;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 drop table if exists \cf4 `global_table`\cf2 ;\
+create table \cf4 `global_table`\
+(\
+    \cf5 `xid`                       \cf2 varchar\cf4 (\cf6 128\cf4 ) \cf2 not null,\
+    \cf5 `transaction_id`            \cf2 bigint,\
+    \cf5 `status`                    \cf2 tinyint      not null,\
+    \cf5 `application_id`            \cf2 varchar\cf4 (\cf6 32\cf4 )\cf2 ,\
+    \cf5 `transaction_service_group` \cf2 varchar\cf4 (\cf6 32\cf4 )\cf2 ,\
+    \cf5 `transaction_name`          \cf2 varchar\cf4 (\cf6 128\cf4 )\cf2 ,\
+    \cf5 `timeout`                   \cf2 int,\
+    \cf5 `begin_time`                \cf2 bigint,\
+    \cf5 `application_data`          \cf2 varchar\cf4 (\cf6 2000\cf4 )\cf2 ,\
+    \cf5 `gmt_create`                \cf2 datetime,\
+    \cf5 `gmt_modified`              \cf2 datetime,\
+    primary key \cf4 (\cf5 `xid`\cf4 )\cf2 ,\
+    key                         \cf4 `idx_gmt_modified_status` (\cf5 `gmt_modified`\cf2 , \cf5 `status`\cf4 )\cf2 ,\
+    key                         \cf4 `idx_transaction_id` (\cf5 `transaction_id`\cf4 )\
+)\cf2 ;\
+\
+\cf7 -- the table to store BranchSession data\
+\cf2 drop table if exists \cf4 `branch_table`\cf2 ;\
+create table \cf4 `branch_table`\
+(\
+    \cf5 `branch_id`         \cf2 bigint       not null,\
+    \cf5 `xid`               \cf2 varchar\cf4 (\cf6 128\cf4 ) \cf2 not null,\
+    \cf5 `transaction_id`    \cf2 bigint,\
+    \cf5 `resource_group_id` \cf2 varchar\cf4 (\cf6 32\cf4 )\cf2 ,\
+    \cf5 `resource_id`       \cf2 varchar\cf4 (\cf6 256\cf4 )\cf2 ,\
+    \cf5 `lock_key`          \cf2 varchar\cf4 (\cf6 128\cf4 )\cf2 ,\
+    \cf5 `branch_type`       \cf2 varchar\cf4 (\cf6 8\cf4 )\cf2 ,\
+    \cf5 `status`            \cf2 tinyint,\
+    \cf5 `client_id`         \cf2 varchar\cf4 (\cf6 64\cf4 )\cf2 ,\
+    \cf5 `application_data`  \cf2 varchar\cf4 (\cf6 2000\cf4 )\cf2 ,\
+    \cf5 `gmt_create`        \cf2 datetime,\
+    \cf5 `gmt_modified`      \cf2 datetime,\
+    primary key \cf4 (\cf5 `branch_id`\cf4 )\cf2 ,\
+    key                 \cf4 `idx_xid` (\cf5 `xid`\cf4 )\
+)\cf2 ;\
+\
+\cf7 -- the table to store lock data\
+\cf2 drop table if exists \cf4 `lock_table`\cf2 ;\
+create table \cf4 `lock_table`\
+(\
+    \cf5 `row_key`        \cf2 varchar\cf4 (\cf6 128\cf4 ) \cf2 not null,\
+    \cf5 `xid`            \cf2 varchar\cf4 (\cf6 96\cf4 )\cf2 ,\
+    \cf5 `transaction_id` \cf2 long,\
+    \cf5 `branch_id`      \cf2 long,\
+    \cf5 `resource_id`    \cf2 varchar\cf4 (\cf6 256\cf4 )\cf2 ,\
+    \cf5 `table_name`     \cf2 varchar\cf4 (\cf6 32\cf4 )\cf2 ,\
+    \cf5 `pk`             \cf2 varchar\cf4 (\cf6 36\cf4 )\cf2 ,\
+    \cf5 `gmt_create`     \cf2 datetime,\
+    \cf5 `gmt_modified`   \cf2 datetime,\
+    primary key \cf4 (\cf5 `row_key`\cf4 )\
+)\cf2 ;\
+\
+\cf7 -- - seata_order\
+\cf2 create\
+    database IF NOT EXISTS \cf4 seata_order \cf2 ;\
+USE\
+    \cf4 seata_order\cf2 ;\
+DROP TABLE IF EXISTS \cf4 `t_order`\cf2 ;\
+CREATE TABLE \cf4 `t_order`\
+(\
+    \cf5 `int`        \cf2 bigint\cf4 (\cf6 11\cf4 ) \cf2 NOT NULL AUTO_INCREMENT,\
+    \cf5 `user_id`    \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'d3\'c3\'bb\'a7
+\f0 id'\cf2 ,\
+    \cf5 `product_id` \cf2 bigint\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'b2\'fa\'c6\'b7
+\f0 id'\cf2 ,\
+    \cf5 `count`      \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'ca\'fd\'c1\'bf
+\f0 '\cf2 ,\
+    \cf5 `money`      \cf2 decimal\cf4 (\cf6 11\cf2 , \cf6 0\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'bd\'f0\'b6\'ee
+\f0 '\cf2 ,\
+    \cf5 `status`     \cf2 int\cf4 (\cf6 1\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'b6\'a9\'b5\'a5\'d7\'b4\'cc\'ac
+\f0 :  0:
+\f1 \'b4\'b4\'bd\'a8\'d6\'d0
+\f0  1:
+\f1 \'d2\'d1\'cd\'ea\'bd\'e1
+\f0 '\cf2 ,\
+    PRIMARY KEY \cf4 (\cf5 `int`\cf4 ) \cf2 USING BTREE\
+\cf4 ) \cf2 ENGINE \cf4 = InnoDB \cf2 CHARACTER SET \cf4 = utf8 \cf2 COLLATE \cf4 = utf8_general_ci \cf2 COMMENT \cf4 = \cf8 '
+\f1 \'b6\'a9\'b5\'a5\'b1\'ed
+\f0 ' \cf2 ROW_FORMAT \cf4 = \cf2 Dynamic;\
+\
+DROP TABLE IF EXISTS \cf4 `undo_log`\cf2 ;\
+CREATE TABLE \cf4 `undo_log`\
+(\
+    \cf5 `id`            \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 NOT NULL AUTO_INCREMENT,\
+    \cf5 `branch_id`     \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 NOT NULL,\
+    \cf5 `xid`           \cf2 varchar\cf4 (\cf6 100\cf4 ) \cf2 NOT NULL,\
+    \cf5 `context`       \cf2 varchar\cf4 (\cf6 128\cf4 ) \cf2 NOT NULL,\
+    \cf5 `rollback_info` \cf2 longblob     NOT NULL,\
+    \cf5 `log_status`    \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 NOT NULL,\
+    \cf5 `log_created`   \cf2 datetime     NOT NULL,\
+    \cf5 `log_modified`  \cf2 datetime     NOT NULL,\
+    \cf5 `ext`           \cf2 varchar\cf4 (\cf6 100\cf4 ) \cf2 DEFAULT NULL,\
+    PRIMARY KEY \cf4 (\cf5 `id`\cf4 )\cf2 ,\
+    UNIQUE KEY \cf4 `ux_undo_log` (\cf5 `xid`\cf2 ,\cf5 `branch_id`\cf4 )\
+) \cf2 ENGINE\cf4 =InnoDB \cf2 AUTO_INCREMENT\cf4 =\cf6 1 \cf2 DEFAULT CHARSET\cf4 =utf8\cf2 ;\
+\
+create\
+    database IF NOT EXISTS \cf4 seata_storage\cf2 ;\
+USE\
+    \cf4 seata_storage\cf2 ;\
+DROP TABLE IF EXISTS \cf4 `t_storage`\cf2 ;\
+CREATE TABLE \cf4 `t_storage`\
+(\
+    \cf5 `int`        \cf2 bigint\cf4 (\cf6 11\cf4 ) \cf2 NOT NULL AUTO_INCREMENT,\
+    \cf5 `product_id` \cf2 bigint\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'b2\'fa\'c6\'b7
+\f0 id'\cf2 ,\
+    \cf5 `total`      \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'d7\'dc\'bf\'e2\'b4\'e6
+\f0 '\cf2 ,\
+    \cf5 `used`       \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'d2\'d1\'d3\'c3\'bf\'e2\'b4\'e6
+\f0 '\cf2 ,\
+    \cf5 `residue`    \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'ca\'a3\'d3\'e0\'bf\'e2\'b4\'e6
+\f0 '\cf2 ,\
+    PRIMARY KEY \cf4 (\cf5 `int`\cf4 ) \cf2 USING BTREE\
+\cf4 ) \cf2 ENGINE \cf4 = InnoDB \cf2 CHARACTER SET \cf4 = utf8 \cf2 COLLATE \cf4 = utf8_general_ci \cf2 COMMENT \cf4 = \cf8 '
+\f1 \'bf\'e2\'b4\'e6
+\f0 ' \cf2 ROW_FORMAT \cf4 = \cf2 Dynamic;\
+INSERT INTO \cf4 `t_storage`\
+\cf2 VALUES \cf4 (\cf6 1\cf2 , \cf6 1\cf2 , \cf6 100\cf2 , \cf6 0\cf2 , \cf6 100\cf4 )\cf2 ;\
+\
+DROP TABLE IF EXISTS \cf4 `undo_log`\cf2 ;\
+CREATE TABLE \cf4 `undo_log`\
+(\
+    \cf5 `id`            \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 NOT NULL AUTO_INCREMENT,\
+    \cf5 `branch_id`     \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 NOT NULL,\
+    \cf5 `xid`           \cf2 varchar\cf4 (\cf6 100\cf4 ) \cf2 NOT NULL,\
+    \cf5 `context`       \cf2 varchar\cf4 (\cf6 128\cf4 ) \cf2 NOT NULL,\
+    \cf5 `rollback_info` \cf2 longblob     NOT NULL,\
+    \cf5 `log_status`    \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 NOT NULL,\
+    \cf5 `log_created`   \cf2 datetime     NOT NULL,\
+    \cf5 `log_modified`  \cf2 datetime     NOT NULL,\
+    \cf5 `ext`           \cf2 varchar\cf4 (\cf6 100\cf4 ) \cf2 DEFAULT NULL,\
+    PRIMARY KEY \cf4 (\cf5 `id`\cf4 )\cf2 ,\
+    UNIQUE KEY \cf4 `ux_undo_log` (\cf5 `xid`\cf2 ,\cf5 `branch_id`\cf4 )\
+) \cf2 ENGINE\cf4 =InnoDB \cf2 AUTO_INCREMENT\cf4 =\cf6 1 \cf2 DEFAULT CHARSET\cf4 =utf8\cf2 ;\
+\
+CREATE\
+    database IF NOT EXISTS \cf4 seata_account\cf2 ;\
+USE\
+    \cf4 seata_account\cf2 ;\
+DROP TABLE IF EXISTS \cf4 `t_account`\cf2 ;\
+CREATE TABLE \cf4 `t_account`\
+(\
+    \cf5 `id`      \cf2 bigint\cf4 (\cf6 11\cf4 ) \cf2 NOT NULL COMMENT \cf8 'id'\cf2 ,\
+    \cf5 `user_id` \cf2 bigint\cf4 (\cf6 11\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'d3\'c3\'bb\'a7
+\f0 id'\cf2 ,\
+    \cf5 `total`   \cf2 decimal\cf4 (\cf6 10\cf2 , \cf6 0\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'d7\'dc\'b6\'ee\'b6\'c8
+\f0 '\cf2 ,\
+    \cf5 `used`    \cf2 decimal\cf4 (\cf6 10\cf2 , \cf6 0\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'d2\'d1\'d3\'c3\'d3\'e0\'b6\'ee
+\f0 '\cf2 ,\
+    \cf5 `residue` \cf2 decimal\cf4 (\cf6 10\cf2 , \cf6 0\cf4 ) \cf2 DEFAULT NULL COMMENT \cf8 '
+\f1 \'ca\'a3\'d3\'e0\'bf\'c9\'d3\'c3\'b6\'ee\'b6\'c8
+\f0 '\cf2 ,\
+    PRIMARY KEY \cf4 (\cf5 `id`\cf4 ) \cf2 USING BTREE\
+\cf4 ) \cf2 ENGINE \cf4 = InnoDB \cf2 CHARACTER SET \cf4 = utf8 \cf2 COLLATE \cf4 = utf8_general_ci \cf2 COMMENT \cf4 = \cf8 '
+\f1 \'d5\'cb\'bb\'a7\'b1\'ed
+\f0 ' \cf2 ROW_FORMAT \cf4 = \cf2 Dynamic;\
+\
+INSERT INTO \cf4 `t_account`\
+\cf2 VALUES \cf4 (\cf6 1\cf2 , \cf6 1\cf2 , \cf6 1000\cf2 , \cf6 0\cf2 , \cf6 1000\cf4 )\cf2 ;\
+\
+DROP TABLE IF EXISTS \cf4 `undo_log`\cf2 ;\
+CREATE TABLE \cf4 `undo_log`\
+(\
+    \cf5 `id`            \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 NOT NULL AUTO_INCREMENT,\
+    \cf5 `branch_id`     \cf2 bigint\cf4 (\cf6 20\cf4 ) \cf2 NOT NULL,\
+    \cf5 `xid`           \cf2 varchar\cf4 (\cf6 100\cf4 ) \cf2 NOT NULL,\
+    \cf5 `context`       \cf2 varchar\cf4 (\cf6 128\cf4 ) \cf2 NOT NULL,\
+    \cf5 `rollback_info` \cf2 longblob     NOT NULL,\
+    \cf5 `log_status`    \cf2 int\cf4 (\cf6 11\cf4 ) \cf2 NOT NULL,\
+    \cf5 `log_created`   \cf2 datetime     NOT NULL,\
+    \cf5 `log_modified`  \cf2 datetime     NOT NULL,\
+    \cf5 `ext`           \cf2 varchar\cf4 (\cf6 100\cf4 ) \cf2 DEFAULT NULL,\
+    PRIMARY KEY \cf4 (\cf5 `id`\cf4 )\cf2 ,\
+    UNIQUE KEY \cf4 `ux_undo_log` (\cf5 `xid`\cf2 ,\cf5 `branch_id`\cf4 )\
+) \cf2 ENGINE\cf4 =InnoDB \cf2 AUTO_INCREMENT\cf4 =\cf6 1 \cf2 DEFAULT CHARSET\cf4 =utf8\cf2 ;\
+}

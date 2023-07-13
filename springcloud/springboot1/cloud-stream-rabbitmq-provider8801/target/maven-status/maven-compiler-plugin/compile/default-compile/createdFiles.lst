@@ -1,0 +1,4 @@
+com/jw/sc/service/Impl/MessageProviderImpl.class
+com/jw/sc/service/IMessageProvider.class
+com/jw/sc/controller/SendMessageController.class
+com/jw/sc/RabbitMQMain8801.class
